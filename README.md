@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Note
+The project development is in progress however, the basic structure and guideline is setup successfully as per requirement.
+## Description
+This project is a Next.js application that utilizes GraphQL with GitHub's API. It includes scripts for development, building, linting, and generating GraphQL schema and types.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js (Latest LTS recommended)
+- npm or yarn
+- A valid GitHub token with API access
 
-```bash
+### Installation
+1. Clone the repository:
+   ```sh
+   git clone <repository-url>
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd <project-directory>
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+   or
+   ```sh
+   yarn install
+   ```
+
+## Available Scripts
+
+### Development
+```sh
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+Starts the development server using Next.js with Turbopack. Also ensures GraphQL types are generated before startup.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Build
+```sh
+npm run build
+```
+Generates a production build of the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Start
+```sh
+npm run start
+```
+Starts the Next.js application in production mode.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Linting
+```sh
+npm run lint
+```
+Runs ESLint to check for code quality and style issues.
 
-## Learn More
+### GraphQL Schema Generation
+```sh
+npm run gen:graphql-schema
+```
+Introspects the GitHub GraphQL API and saves the schema to `./app/graphql/schema.graphql`.
+Requires a valid GitHub token in the `GITHUB_TOKEN` environment variable.
 
-To learn more about Next.js, take a look at the following resources:
+### GraphQL Types Generation
+```sh
+npm run gen:graphql-types
+```
+Runs `gen:graphql-schema` followed by `codegen` to generate TypeScript types from the GraphQL schema.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### GraphQL Code Generation
+```sh
+npm run codegen
+```
+Uses `graphql-codegen` to generate TypeScript types based on the `codegen.ts` configuration.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Environment Variables
+Ensure you have a `.env.local` file with the following variable set:
+```sh
+GITHUB_TOKEN=your_github_token_here
+```
+This is required for introspecting the GitHub GraphQL schema.
 
-## Deploy on Vercel
+## License
+This project is licensed under [Your License Here].
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
