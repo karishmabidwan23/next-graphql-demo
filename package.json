@@ -3,23 +3,39 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "npm run gen:graphql-types && next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen:graphql-schema": "sh -c 'rover graph introspect https://api.github.com/graphql -H \"Authorization: bearer $GITHUB_TOKEN\" > ./app/graphql/schema.graphql'",
+    "gen:graphql-types": "npm run gen:graphql-schema & npm run codegen --config codegen.ts",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
+    "@apollo/client": "^3.12.8",
+    "@apollo/experimental-nextjs-app-support": "^0.11.8",
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.4.3",
+    "@mui/x-date-pickers": "^7.25.0",
+    "formik": "^2.4.6",
+    "graphql": "^16.10.0",
+    "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.1.6"
+    "yup": "^1.6.1"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@apollo/rover": "^0.26.3",
+    "@eslint/eslintrc": "^3",
+    "@graphql-codegen/cli": "^5.0.4",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
-    "@eslint/eslintrc": "^3"
+    "typescript": "^5.7.3"
   }
 }
