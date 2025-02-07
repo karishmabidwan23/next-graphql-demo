@@ -5,6 +5,6 @@
  * from other sources like secrets etc Its good to configure everything at once place.
  */
 export const GLOBAL_ENV_CONFIG = {
-    gitGraphqlUrl: process.env.GITHUB_GRAPHQL_URL,
+    gitGraphqlUrl: process.env.NEXT_PUBLIC_GITHUB_GRAPHQL_URL,
     gitAuthToken: process.env.GITHUB_AUTH_TOKEN
 }

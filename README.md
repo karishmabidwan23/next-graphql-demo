@@ -76,7 +76,8 @@ Uses `graphql-codegen` to generate TypeScript types based on the `codegen.ts` co
 ## Environment Variables
 Ensure you have a `.env.local` file with the following variable set:
 ```sh
-GITHUB_TOKEN=your_github_token_here
+NEXT_PUBLIC_GITHUB_GRAPHQL_URL="https://api.github.com/graphql"
+GITHUB_AUTH_TOKEN=your_github_token_here
 ```
 This is required for introspecting the GitHub GraphQL schema.
 
