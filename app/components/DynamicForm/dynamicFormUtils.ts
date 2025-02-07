@@ -73,8 +73,8 @@ export const getFormFields = (query: DocumentNode): Array<FormField> | undefined
     return yup.object().shape(schemaShape);
   }
 
-  export function getInitialValues(fields: FormField[]) {
-    const initialValues: Record<string, any> = {};
+  export function getInitialValues<TVariable>(fields: FormField[]) {
+    const initialValues: Record<string, string|number|undefined|boolean> = {};
   
     fields.forEach(({ name, type }) => {
       switch (type) {
@@ -88,7 +88,7 @@ export const getFormFields = (query: DocumentNode): Array<FormField> | undefined
           initialValues[name] = false;
           break;
         case "Date":
-          initialValues[name] = null;
+          initialValues[name] = undefined;
           break;
         case "Unknown":
           initialValues[name] = undefined;
@@ -98,5 +98,5 @@ export const getFormFields = (query: DocumentNode): Array<FormField> | undefined
       }
     });
   
-    return initialValues;
+    return initialValues as unknown as TVariable;
   }

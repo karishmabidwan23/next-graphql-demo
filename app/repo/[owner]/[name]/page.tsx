@@ -22,14 +22,16 @@ const RepositoryDetailPage = async ({params}: ReposiotryDetailPageProps) => {
 
     if(error) return <div>{error.message}</div>
 
-    return <div>
-        <h1>Repository Detail Page</h1>
+    return  <div className={"page"}>
+    <div className={"main align-left"}>
+        <h1 className="mb-4">Repository Detail Page : {name}</h1>
         <div>Reponame: {name}</div>
         <div>Owner: {owner}</div>
         <div>Description: {data?.repository?.description}</div>
-        <div>Projects url: {data?.repository?.projectsUrl}</div>
+        <div>Projects url: <a href={data?.repository?.projectsUrl}>{data?.repository?.projectsUrl}</a></div>
         <div>Fork count: {data?.repository?.forkCount}</div>
         <div>Pushed At: {data?.repository?.pushedAt}</div>
+    </div>
     </div>
 }
 

@@ -1,6 +1,7 @@
 
 
 export const Routes = {
-    getRepoListRoute: (owner: string) => `/repo/${owner}`,
+    getRepoRoute: () => `/repo`,
+    getRepoListRoute: (owner: string,limit: number) => `/repo/${owner}?limit=${limit}`,
     getRepoDetailRoute: (owner: string, reponame: string) => `/repo/${owner}/${reponame}`
 }

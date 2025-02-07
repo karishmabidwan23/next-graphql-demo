@@ -6,22 +6,32 @@ import {
   getFormFields,
   getInitialValues,
 } from "./dynamicFormUtils";
-import { Button, Checkbox, FormControl } from "@mui/material";
+import { Button, FormControl } from "@mui/material";
 import { useMemo } from "react";
-import { TextInputField } from "./TextInputField";
+import { TextInputField } from "./form-fields/TextInputField";
 import { FormField } from "../type";
-import { DateTimenputField } from "./DateInputField";
-import { Formik, FormikProvider, useFormik } from "formik";
+import { DateTimeInputField } from "./form-fields/DateInputField";
+import { FormikProvider, useFormik } from "formik";
+import { CheckboxField } from "./form-fields/CheckboxField";
 
-const renderField = (field: FormField) => {
-  if (field.type === "Int" || field.type === "String")
-    return <TextInputField {...field} key={field.name} />;
-  if (field.type === "Boolean") return <Checkbox />;
-  if (field.type === "Date")
-    return <DateTimenputField {...field} key={field.name} />;
-
-  return <div>To do implement field</div>;
-};
+const fieldComponentMap: Record<string, React.ComponentType<{name: string}>> = {
+    Int: TextInputField,
+    String: TextInputField,
+    Boolean: CheckboxField,
+    Date: DateTimeInputField, 
+  };
+  
+  const renderField = (field: FormField) => {
+    const Component = fieldComponentMap[field.type];
+  
+    return Component ? (
+      <div className="mb-2" key={field.name}>
+        <Component name={field.name}/>
+      </div>
+    ) : (
+      <div>To do: implement rest of other fields...</div>
+    );
+  };
 
 /**
  *
@@ -38,15 +48,15 @@ export const DynamicFormComponent = <TVariable,>({
   onSubmit: (data: TVariable) => void;
 }) => {
   const formFields = useMemo(() => getFormFields(query) || [], [query]);
-  const form = useFormik({
-    initialValues: getInitialValues(formFields),
+  const form = useFormik<TVariable>({
+    initialValues: getInitialValues<TVariable>(formFields),
     validationSchema: generateYupSchema(formFields),
-    onSubmit: (values) => onSubmit(values as TVariable),
+    onSubmit: (values: TVariable) => onSubmit(values),
   });
 
   return (
     <FormControl>
-      <FormikProvider value={form}>
+      <FormikProvider value={form} >
         {formFields?.map((field) => renderField(field))}
         <Button onClick={() => form.handleSubmit()}>Submit Form</Button>
       </FormikProvider>
